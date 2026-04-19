@@ -55,6 +55,8 @@ export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [password, setPassword] = useState("");
+  const [installPrompt, setInstallPrompt] = useState<Event | null>(null);
+  const [isInstalled, setIsInstalled] = useState(false);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<ChatMessage[]>(seedMessages);
   const [isLoadingHistory, setIsLoadingHistory] = useState(false);
@@ -96,6 +98,35 @@ export default function Home() {
 
     void checkSession();
   }, []);
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      e.preventDefault();
+      setInstallPrompt(e);
+    };
+    const installedHandler = () => setIsInstalled(true);
+
+    window.addEventListener("beforeinstallprompt", handler);
+    window.addEventListener("appinstalled", installedHandler);
+
+    if (window.matchMedia("(display-mode: standalone)").matches) {
+      setIsInstalled(true);
+    }
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handler);
+      window.removeEventListener("appinstalled", installedHandler);
+    };
+  }, []);
+
+  const onInstallClick = async () => {
+    if (!installPrompt) return;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const result = await (installPrompt as any).prompt();
+    if (result?.outcome === "accepted") {
+      setInstallPrompt(null);
+    }
+  };
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -419,6 +450,11 @@ export default function Home() {
           <div className="hdr-sub">{counterpart.subtitle}</div>
         </div>
         <span className="hdr-badge">KO ↔ RU</span>
+        {!isInstalled && installPrompt ? (
+          <button className="install-btn" onClick={() => void onInstallClick()} type="button" title="Добавить на главный экран">
+            📲
+          </button>
+        ) : null}
       </div>
 
       <div className="messages" ref={messagesRef}>

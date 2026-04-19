@@ -196,6 +196,16 @@ body {
   flex-shrink: 0;
 }
 
+.install-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 0 4px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
 .messages {
   flex: 1;
   overflow-y: auto;
