@@ -121,8 +121,7 @@ export default function Home() {
 
   const onInstallClick = async () => {
     if (!installPrompt) return;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const result = await (installPrompt as any).prompt();
+    const result = await (installPrompt as { prompt: () => Promise<{ outcome: string }> }).prompt();
     if (result?.outcome === "accepted") {
       setInstallPrompt(null);
     }
