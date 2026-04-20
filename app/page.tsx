@@ -522,6 +522,11 @@ export default function Home() {
                 void onSend();
               }
             }}
+            onFocus={() => {
+              setTimeout(() => {
+                textareaRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+              }, 100);
+            }}
           />
 
           <button className="send-btn" onClick={() => void onSend()} type="button">
