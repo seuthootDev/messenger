@@ -121,7 +121,7 @@ export default function Home() {
 
   const onInstallClick = async () => {
     if (!installPrompt) return;
-    const result = await (installPrompt as { prompt: () => Promise<{ outcome: string }> }).prompt();
+    const result = await (installPrompt as unknown as { prompt: () => Promise<{ outcome: string }> }).prompt();
     if (result?.outcome === "accepted") {
       setInstallPrompt(null);
     }
