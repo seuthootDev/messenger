@@ -13,29 +13,7 @@ type ChatMessage = {
   pending?: boolean;
 };
 
-const seedMessages: ChatMessage[] = [
-  {
-    id: "seed-1",
-    sender: "B",
-    text: "Привет! Как дела?",
-    translatedText: "안녕하세요! 어떻게 지내세요?",
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: "seed-2",
-    sender: "A",
-    text: "잘 지내고 있어요! 오늘 날씨가 너무 좋네요.",
-    translatedText: "Я в порядке! Сегодня очень хорошая погода.",
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: "seed-3",
-    sender: "B",
-    text: "Да, здесь тоже солнечно! Чем ты занимаешься?",
-    translatedText: "네, 여기도 맑아요! 오늘 뭐 하고 있어요?",
-    createdAt: new Date().toISOString(),
-  },
-];
+const seedMessages: ChatMessage[] = [];
 
 function getTimeLabel(iso: string) {
   const date = new Date(iso);
